@@ -2,9 +2,17 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs/promises';
 import path from 'node:path';
 const root=path.resolve(import.meta.dirname,'../dist');
+const sourceRoot=path.resolve(root,'..');
+assert(!(await fs.readdir(sourceRoot)).some(file=>/^index\.(md|markdown)$/i.test(file)),
+  'Homepage must be HTML, not Markdown: GitHub Pages can escape the document declaration.');
 let links=0;
 for(const page of ['index.html','kitty-match/index.html']){
   const html=await fs.readFile(path.join(root,page),'utf8');
+  assert.match(html,/^<!doctype html>\s*<html\b/i,`${page}: valid leading doctype required`);
+  assert.equal((html.match(/<!doctype\b/gi)||[]).length,1,`${page}: exactly one doctype required`);
+  assert(!/&lt;!doctype\b/i.test(html),`${page}: escaped doctype would display as page text`);
+  assert.equal(html,await fs.readFile(path.join(sourceRoot,page),'utf8'),
+    `${page}: public GitHub Pages source must match the preview output`);
   assert.match(html,/<html lang="en">/);
   assert.equal((html.match(/<h1[ >]/g)||[]).length,1,`${page}: one H1 required`);
   assert.match(html,/<meta name="description" content="[^"]+">/);

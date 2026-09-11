@@ -2,7 +2,7 @@
 
 Official origin: https://pixelmonkgames.github.io/
 
-This repository preserves the existing GitHub Pages/Jekyll homepage entry (`index.md`) and existing privacy policy, app-ads.txt and Google verification file. The homepage is a complete HTML document with Jekyll front matter; `/kitty-match/index.html` is a static dedicated game page. No runtime dependencies, tracking scripts or cookies were added.
+The homepage is a static `index.html` document without Jekyll front matter; `/kitty-match/index.html` is the dedicated game page. Both are copied unchanged into the private preview build, so GitHub Pages and the preview use identical page source. Do not rename the homepage to `index.md`: Markdown conversion can escape the doctype and display it as text. The existing privacy policy, app-ads.txt and Google verification file are preserved. No runtime dependencies, tracking scripts or cookies were added.
 
 ## Local review and checks
 
@@ -13,7 +13,7 @@ The private Sites review uses `.openai/hosting.json`. It is not a second public 
 ## Public publishing checklist
 
 1. Review the private preview and approve the update to the existing public GitHub Pages site.
-2. Confirm the website repository's Pages source branch. The existing branch-based Jekyll flow can continue; no framework migration is required.
+2. Confirm the website repository's Pages source branch. The existing branch-based flow can continue; no framework migration is required. Include both the removal of `index.md` and the addition of `index.html` when publishing the homepage fix.
 3. Push the approved source to that repository/branch, not the private review repository.
 4. Verify `/`, `/kitty-match/`, `/privacy-policy.html`, `/app-ads.txt`, `/google62ec7e491d21f2e9.html`, `/robots.txt` and `/sitemap.xml` on the live origin.
 5. Inspect the official homepage and game page in the existing Google Search Console property (or verify ownership if needed), then request indexing and submit `/sitemap.xml`.
